@@ -45,7 +45,7 @@ class Tiles extends Sprite
 		tab.graphics.drawRect(0, -20, 1, 20);
 		addChild(tab);
 		addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
-		addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+		addEventListener(Event.ENTER_FRAME, update);
 		addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN, middleMouseDown);
 		addEventListener(MouseEvent.MIDDLE_MOUSE_UP, middleMouseUp);
@@ -58,16 +58,18 @@ class Tiles extends Sprite
 		tab.width = bitmap.width;
 	}
 	
-	public function mouseMove(e:MouseEvent)
+	public function update(e:Event)
 	{
+		if (mouseBool)
+		{
 		var size = preview.data.size;
 		var dataWidth = preview.data.width;
 		var dataHeight = preview.data.height;
 		//select.width = size;
 		//select.height = size;
-		var iX = Math.floor(e.localX/size);
-		var iY = Math.floor((e.localY - bitmap.y) / size);
-		if (iX > 0 && iX < dataWidth && mouseBool) //&& iY > 0 && iY < dataHeight)
+		var iX = Math.floor(mouseX/size);
+		var iY = Math.floor((mouseY - bitmap.y) / size);
+		if (iX > 0 && iX < dataWidth) //&& iY > 0 && iY < dataHeight)
 		{
 			if (selectInit)
 			{
@@ -83,6 +85,7 @@ class Tiles extends Sprite
 			//select.graphics.beginFill(0, 0.4);
 			select.graphics.lineStyle(2, 0);
 			select.graphics.drawRect(selectMinX * size, selectMinY * size,(selectMaxX - selectMinX + 1) * size,(selectMaxY - selectMinY + 1) * size);
+		}
 		}
 	}
 	

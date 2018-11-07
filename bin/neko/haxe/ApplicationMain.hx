@@ -38,7 +38,7 @@ import haxe.macro.Expr;
 		
 		var config = {
 			
-			build: "333",
+			build: "3",
 			company: "",
 			file: "Tegel",
 			fps: 60,
@@ -110,7 +110,7 @@ import haxe.macro.Expr;
 		#if (lime >= "7.0.0")
 		ManifestResources.init (config);
 		
-		app.meta["build"] = "333";
+		app.meta["build"] = "3";
 		app.meta["company"] = "";
 		app.meta["file"] = "Tegel";
 		app.meta["name"] = "Tegel";
