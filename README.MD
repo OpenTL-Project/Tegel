@@ -11,7 +11,3 @@ Want to contribute click [here](https://github.com/OpenTL-Project/Tegel/projects
 
 - [OpenFL](https://github.com/openfl/openfl)
 - [Lime](https://github.com/openfl/lime)
-- [Actuate](https://github.com/jgranick/actuate)
-
-## Current Functionality
--
