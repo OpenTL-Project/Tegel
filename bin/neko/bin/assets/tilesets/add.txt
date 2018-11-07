@@ -1,1 +1,0 @@
-Add tilesets into this directory in order to use them.
