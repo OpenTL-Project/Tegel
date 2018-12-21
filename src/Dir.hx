@@ -1,8 +1,10 @@
 package;
 import haxe.Json;
+import haxe.crypto.Base64;
 import lime.system.System;
 import openfl.Lib;
 import openfl.display.BitmapData;
+import openfl.display.PNGEncoderOptions;
 import openfl.net.SharedObject;
 import sys.FileSystem;
 import sys.io.File;
@@ -14,6 +16,7 @@ class Dir
 {
 	public static var global:SharedObject;
 	public static var local:SharedObject;
+	public static var image:Array<String> = [];
 	
 	public function new() 
 	{
@@ -38,11 +41,14 @@ class Dir
 			if (extension == ".png" || extension == ".jpg")
 			{
 				//Tiles.set.push(new TilesetType().
-				BitmapData.loadFromFile(path + "/assets/tilesets/" + name).onComplete(function(bmd:BitmapData)
+				BitmapData.loadFromFile(path + "/assets/tilesets/" + name).onComplete(function(data:BitmapData)
 				{
 					trace("push bmd");
-					Main.tiles.preview.bmdArray.push(bmd);
-					if (first) Main.tiles.preview.start();
+					var rect = data.rect;
+					var bytes = data.encode(rect, new PNGEncoderOptions());
+					var string = Base64.encode(bytes);
+					image.push(string);
+					Main.tiles.updateBitmap(BitmapData.fromBytes(Base64.decode(string)));
 					first = false;
 				});
 			}
