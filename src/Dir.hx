@@ -17,6 +17,7 @@ class Dir
 	public static var global:SharedObject;
 	public static var local:SharedObject;
 	public static var image:Array<String> = [];
+	public static var name:String;
 	
 	public function new() 
 	{
@@ -49,6 +50,7 @@ class Dir
 					var string = Base64.encode(bytes);
 					image.push(string);
 					Main.tiles.updateBitmap(BitmapData.fromBytes(Base64.decode(string)));
+					Dir.name = name;
 					first = false;
 				});
 			}

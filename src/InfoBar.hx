@@ -19,7 +19,7 @@ class InfoBar extends DisplayObjectContainer
 	var sizeInput:Text;
 	var shape:Shape;
 	var rowText:Text;
-	var rowInput:Text;
+	public var rowInput:Text;
 	var columnText:Text;
 	var columnInput:Text;
 

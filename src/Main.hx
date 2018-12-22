@@ -22,7 +22,8 @@ class Main extends Sprite
 	var tileStage:Array<TileStage> = [];
 	public static var tiles:Tiles;
 	public static var tile:TileStage;
-	var infoBar:InfoBar;
+	public static var infoBar:InfoBar;
+	var header:Header;
 	public static var up:Bool = false;
 	public static var down:Bool = false;
 	public static var left:Bool = false;
@@ -46,6 +47,7 @@ class Main extends Sprite
 		addChild(particles);
 		//objects
 		tiles = new Tiles();
+		tiles.y = 40;
 		tile = new TileStage();
 		addChild(tile);
 		tileStage.push(tile);
@@ -53,6 +55,9 @@ class Main extends Sprite
 		
 		infoBar = new InfoBar();
 		addChild(infoBar);
+		
+		header = new Header();
+		addChild(header);
 		
 		addEventListener(Event.ENTER_FRAME, update);
 		stage.addEventListener(Event.RESIZE, resize);
@@ -71,6 +76,7 @@ class Main extends Sprite
 	private function resize(e:Event)
 	{
 		infoBar.resize();
+		header.resize();
 		for (tile in tileStage) tile.resize();
 		
 	}

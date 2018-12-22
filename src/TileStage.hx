@@ -47,7 +47,7 @@ class TileStage extends Pannel
 	public var intY:Int = 10;
 	var mouseBool:Bool = false;
 	var rightBool:Bool = false;
-	var tilemap:Tilemap;
+	public var tilemap:Tilemap;
 	public var shape:Shape;
 	var iX:Int = 0;
 	var iY:Int = 0;
@@ -152,7 +152,7 @@ class TileStage extends Pannel
 			if (setHistoryBool)
 			{
 				trace("reset");
-				history = new History<TileData>(10);
+				history = new History<TileData>(100);
 				setHistoryBool = false;
 			}
 			history.add(new TileData(iX, iY,tW,tH,Math.floor(Main.tiles.select.x / Main.tiles.size),Math.floor(Main.tiles.select.y / Main.tiles.size),add));
@@ -204,7 +204,7 @@ class TileStage extends Pannel
 		gridSize(false);
 		tilemap.removeTiles(0, tilemap.numTiles);
 		//history
-		history = new History<TileData>(10);
+		history = new History<TileData>(100);
 	}
 	public function gridSize(delete:Bool=true)
 	{

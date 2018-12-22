@@ -65,7 +65,7 @@ class Tiles extends Pannel
 		tab.alpha = 0.8;
 		tab.cacheAsBitmap = false;
 		tab.graphics.beginFill(0x32343C);
-		tab.graphics.drawRect(0, -20, 1, 20);
+		tab.graphics.drawRect(0, -15, 1, 15);
 		addChild(tab);
 	}
 	
