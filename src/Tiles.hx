@@ -17,7 +17,7 @@ import openfl.ui.Keyboard;
  * ...
  * @author 
  */
-class Tiles extends Sprite 
+class Tiles extends Pannel
 {
 	public static var array:Array<TileType> = [];
 	public var graphic:Shape;
@@ -25,6 +25,7 @@ class Tiles extends Sprite
 	public var tab:Shape;
 	public var select:Sprite;
 	public var selectDrag:Bool = false;
+	public var keyInt:Int = 0;
 	public var selectOffset:Point;
 	public var selectX:Float = 0;
 	public var selectY:Float = 0;
@@ -33,11 +34,12 @@ class Tiles extends Sprite
 	public var maxY:Int = 0;
 	public var maxX:Int = 0;
 	public var mouseBool:Bool = false;
-	public var size:Int = 16;
+	public var size:Int = 1;
 	public function new()
 	{
 		super();
 		y = 20;
+		buttonMode = true;
 		bitmap = new Bitmap();
 		addChild(bitmap);
 		graphic = new Shape();
@@ -65,39 +67,6 @@ class Tiles extends Sprite
 		tab.graphics.beginFill(0x32343C);
 		tab.graphics.drawRect(0, -20, 1, 20);
 		addChild(tab);
-		addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
-		addEventListener(Event.ENTER_FRAME, update);
-		addEventListener(MouseEvent.MOUSE_UP, mouseUp);
-		addEventListener(MouseEvent.MIDDLE_MOUSE_DOWN, middleMouseDown);
-		addEventListener(MouseEvent.MIDDLE_MOUSE_UP, middleMouseUp);
-		addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
-		addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
-		addEventListener(KeyboardEvent.KEY_UP, keyUp);
-	}
-	
-	public function keyDown(e:KeyboardEvent)
-	{
-		selectDrag = false;
-		mouseBool = false;
-		switch(e.keyCode)
-		{
-			case Keyboard.UP:
-			select.y += -size;
-			case Keyboard.DOWN:
-			select.y += size;
-			case Keyboard.LEFT:
-			select.x += -size;
-			case Keyboard.RIGHT:
-			select.x += size;
-		}
-		if (select.y + select.height > bitmap.height + size) select.y += -size;
-		if (select.y < 0) select.y += size;
-		if (select.x + select.width > bitmap.width + size) select.x += -size;
-		if (select.x < 0) select.x += size;
-	}
-	public function keyUp(e:KeyboardEvent)
-	{
-		
 	}
 	
 	public function updateBitmap(data:BitmapData)
@@ -106,8 +75,22 @@ class Tiles extends Sprite
 		tab.width = bitmap.width;
 	}
 	
-	public function update(e:Event)
+	override private function update(_)
 	{
+		if (Binding.keyDown && keyInt > bitmap.width/size/60 * 8)
+		{
+			if (Main.upSelect) select.y += -size;
+			if (Main.downSelect) select.y += size;
+			if (Main.leftSelect) select.x += -size;
+			if (Main.rightSelect) select.x += size;
+			
+			if (select.y + select.height > bitmap.height + size) select.y += -size;
+			if (select.y < 0) select.y += size;
+			if (select.x + select.width > bitmap.width + size) select.x += -size;
+			if (select.x < 0) select.x += size;
+			keyInt = 0;
+		}
+		keyInt++;
 		if (selectDrag)
 		{
 			select.x = Math.floor((mouseX - selectOffset.x) / size) * size;
@@ -138,7 +121,7 @@ class Tiles extends Sprite
 		}
 	}
 	
-	public function mouseDown(e:MouseEvent)
+	override private function mouseDown(e:MouseEvent)
 	{
 		if (!selectDrag)
 		{
@@ -155,43 +138,12 @@ class Tiles extends Sprite
 			}
 		}
 	}
-	public function mouseUp(e:MouseEvent)
+	override private function mouseUp(e:MouseEvent)
 	{
 		stopDrag();
 		selectDrag = false;
 		mouseBool = false;
 		leave();
-	}
-	public function middleMouseDown(e:MouseEvent)
-	{
-		startDrag();
-	}
-	public function middleMouseUp(e:MouseEvent)
-	{
-		stopDrag();
-		leave();
-	}
-	public function mouseWheel(e:MouseEvent)
-	{
-		var scale = 0.1;
-		if (e.delta > 0)
-		{
-			scaleX += scale;
-			scaleY += scale;
-		}else{
-			scaleX += -scale;
-			scaleY += -scale;
-		}
-	}
-	
-	public function leave()
-	{
-		//leave outside
-		if (x < -width + 10 || y < 0 || x > stage.stageWidth || y > stage.stageHeight)
-		{
-			x = (stage.stageWidth - width) / 2;
-			y = (stage.stageHeight - height) / 2;
-		}
 	}
 	
 }
