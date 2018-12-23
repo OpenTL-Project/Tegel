@@ -1,5 +1,6 @@
 package ui.bar;
 
+import haxe.Json;
 import haxe.Serializer;
 import haxe.Unserializer;
 import haxe.crypto.Base64;
@@ -101,22 +102,51 @@ class Header extends Sprite
 			});
 			case 2:
 			//export
+			var row:Int = Math.floor(Main.tiles.bitmap.width / Main.tiles.size);
+			
+			//xml
 			var xml = Xml.createDocument();
 			var map = Xml.createElement("map");
-			map.set("version", "1.0");
-			map.set("orientation", "orthogonal");
-			map.set("renderorder", "right-down");
-			map.set("width", Std.string(Main.tiles.bitmap.width));
-			map.set("height", Std.string(Main.tiles.bitmap.height));
-			map.set("tilewidth", Std.string(Main.tiles.size));
-			map.set("tileheight", Std.string(Main.tiles.size));
-			map.set("nextobjectid", "29");
+			map.set("row", Std.string(row));
+			map.set("size", Std.string(Main.tiles.size));
 			xml.addChild(map);
 			var source = Xml.createElement("image");
 			source.set("source", system.Dir.name);
-			
+			xml.addChild(source);
+			var tileDoc = Xml.createElement("tile");
+			xml.addChild(tileDoc);
+			for (i in 0...Main.tile.tilemap.numTiles) 
+			{
+				var doc = Xml.createElement(Std.string(i));
+				doc.set("id", "-1");
+				tileDoc.addChild(doc);
+			}
+			for (i in 0...Main.tile.tilemap.numTiles)
+			{
+				var tile = Main.tile.tilemap.getTileAt(i);
+				var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * row;
+				var doc = Xml.createElement("tile");
+				doc.set("id", Std.string(tile.id));
+				tileDoc.insertChild(doc, id);
+			}
 			trace(xml.toString());
 			
+			//json
+			var array:Array<Int> = [];
+			for (i in 0...Math.floor(Main.tiles.bitmap.height / Main.tiles.size) * row)array.push(-1);
+			for (i in 0...Main.tile.tilemap.numTiles)
+			{
+				var tile = Main.tile.tilemap.getTileAt(i);
+				var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * row;
+				array[id] = tile.id;
+			}
+			dialog.browse(FileDialogType.SAVE, "json", System.applicationStorageDirectory, "Export Json");
+			var data:Dynamic = Json.stringify({array:array, size:Main.tiles.size, row:row, name:Dir.name});
+			dialog.onSelect.add(function(path:String)
+			{
+				File.saveContent(path, data);
+			});
+			trace("data " + data);
 		}
 	}
 	
