@@ -12,6 +12,14 @@ import openfl.events.Event;
 import openfl.events.KeyboardEvent;
 import openfl.events.MouseEvent;
 import openfl.text.TextFormatAlign;
+import system.Binding;
+import system.Dir;
+import ui.Style;
+import ui.bar.Header;
+import ui.bar.InfoBar;
+import ui.Snow;
+import ui.tile.TileStage;
+import ui.tile.Tiles;
 
 /**
  * ...
@@ -19,11 +27,11 @@ import openfl.text.TextFormatAlign;
  */
 class Main extends Sprite
 {
-	var tileStage:Array<TileStage> = [];
-	public static var tiles:Tiles;
-	public static var tile:TileStage;
-	public static var infoBar:InfoBar;
-	var header:Header;
+	var tileStage:Array<ui.tile.TileStage> = [];
+	public static var tiles:ui.tile.Tiles;
+	public static var tile:ui.tile.TileStage;
+	public static var infoBar:ui.bar.InfoBar;
+	var header:ui.bar.Header;
 	public static var up:Bool = false;
 	public static var down:Bool = false;
 	public static var left:Bool = false;
@@ -38,25 +46,26 @@ class Main extends Sprite
 	public function new() 
 	{
 		super();
-		new Dir();
-		stage.color = Style.data.window_object;
+		new system.Dir();
+		stage.color = ui.Style.data.window_object;
 		//particles
 		var bmd:BitmapData = Assets.getBitmapData("assets/icons/snow.png");
 		particles = new Tilemap(stage.stageWidth, stage.stageHeight, new Tileset(bmd, [bmd.rect]));
-		particles.addTile(new Snow());
+		particles.y = 40;
+		for (i in 0...100) particles.addTile(new ui.Snow());
 		addChild(particles);
 		//objects
-		tiles = new Tiles();
+		tiles = new ui.tile.Tiles();
 		tiles.y = 40;
-		tile = new TileStage();
+		tile = new ui.tile.TileStage();
 		addChild(tile);
 		tileStage.push(tile);
 		addChild(tiles);
 		
-		infoBar = new InfoBar();
+		infoBar = new ui.bar.InfoBar();
 		addChild(infoBar);
 		
-		header = new Header();
+		header = new ui.bar.Header();
 		addChild(header);
 		
 		addEventListener(Event.ENTER_FRAME, update);
@@ -66,11 +75,11 @@ class Main extends Sprite
 	}
 	private function keyDown(e:KeyboardEvent)
 	{
-		Binding.key(e.keyCode, true);
+		system.Binding.key(e.keyCode, true);
 	}
 	private function keyUp(e:KeyboardEvent)
 	{
-		Binding.key(e.keyCode, false);
+		system.Binding.key(e.keyCode, false);
 	}
 	
 	private function resize(e:Event)
@@ -83,6 +92,11 @@ class Main extends Sprite
 	private function update(e:Event)
 	{
 		infoBar.update();
+		//particles
+		for (i in 0...particles.numTiles)
+		{
+			cast(particles.getTileAt(i),Snow).update();
+		}
 	}
 	
 

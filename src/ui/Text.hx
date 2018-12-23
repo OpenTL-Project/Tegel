@@ -1,3 +1,5 @@
+package ui;
+
 import haxe.Timer;
 import openfl.Lib;
 import openfl.display.Bitmap;

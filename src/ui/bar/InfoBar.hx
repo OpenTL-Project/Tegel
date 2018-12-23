@@ -1,4 +1,4 @@
-package;
+package ui.bar;
 
 import openfl.display.DisplayObjectContainer;
 import openfl.display.Shape;

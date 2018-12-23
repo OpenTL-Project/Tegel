@@ -1,4 +1,4 @@
-package;
+package ui.tile;
 
 import openfl.display.CapsStyle;
 import openfl.display.LineScaleMode;
@@ -12,6 +12,7 @@ import openfl.events.KeyboardEvent;
 import openfl.events.MouseEvent;
 import openfl.geom.Rectangle;
 import openfl.ui.Keyboard;
+import ui.Pannel;
 
 /**
  * ...
@@ -39,7 +40,7 @@ class TileData
 	public var add:Bool;
 }
 
-class TileStage extends Pannel
+class TileStage extends ui.Pannel
 {
 	
 	var moveSpeed:Float = 5;
@@ -273,6 +274,7 @@ class TileStage extends Pannel
 	{
 		super.mouseDown(e);
 		mouseBool = true;
+		rightBool = false;
 		lastX = -1;
 		lastY = -1;
 	}
@@ -298,6 +300,7 @@ class TileStage extends Pannel
 	{
 		super.rightDown(e);
 		rightBool = true;
+		mouseBool = false;
 		lastX = -1;
 		lastY = -1;
 	}

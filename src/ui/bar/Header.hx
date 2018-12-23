@@ -1,4 +1,4 @@
-package;
+package ui.bar;
 
 import haxe.Serializer;
 import haxe.Unserializer;
@@ -16,6 +16,8 @@ import openfl.display.Tile;
 import openfl.events.MouseEvent;
 import openfl.text.TextFormatAlign;
 import sys.io.File;
+import system.Dir;
+import ui.Text;
 
 /**
  * ...
@@ -42,7 +44,7 @@ class Header extends Sprite
 	}
 	private function add(string:String)
 	{
-		var text = new Text(setX + int * buttonWidth, 2, buttonWidth, string, 12, Style.data.panel_text, TextFormatAlign.LEFT);
+		var text = new ui.Text(setX + int * buttonWidth, 2, buttonWidth, string, 12, Style.data.panel_text, TextFormatAlign.LEFT);
 		text.height = 15;
 		addChild(text);
 		int ++;
@@ -95,7 +97,7 @@ class Header extends Sprite
 					trace("id " + id);
 					array[id] = tile.id;
 				}
-				File.saveContent(path,Serializer.run({array:array,size:Main.tiles.size,row:row,name:Dir.name}));
+				File.saveContent(path,Serializer.run({array:array,size:Main.tiles.size,row:row,name:system.Dir.name}));
 			});
 			case 2:
 			//export
@@ -111,7 +113,7 @@ class Header extends Sprite
 			map.set("nextobjectid", "29");
 			xml.addChild(map);
 			var source = Xml.createElement("image");
-			source.set("source", Dir.name);
+			source.set("source", system.Dir.name);
 			
 			trace(xml.toString());
 			

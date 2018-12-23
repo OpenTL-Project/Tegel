@@ -1,4 +1,4 @@
-package;
+package system;
 import haxe.Json;
 import haxe.crypto.Base64;
 import lime.system.System;
@@ -33,7 +33,7 @@ class Dir
 		{
 			Reflect.setProperty(parsedData, field, Std.parseInt(Reflect.getProperty(temp, field)));
 		}
-		Style.data = parsedData;
+		ui.Style.data = parsedData;
 		//get tilesets
 		var first:Bool = true;
 		for (name in FileSystem.readDirectory(path + "/assets/tilesets"))

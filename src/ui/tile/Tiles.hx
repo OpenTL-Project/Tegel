@@ -1,4 +1,4 @@
-package;
+package ui.tile;
 
 import lime.utils.Bytes;
 import openfl.Lib;
@@ -12,12 +12,15 @@ import openfl.events.Event;
 import openfl.events.KeyboardEvent;
 import openfl.events.MouseEvent;
 import openfl.ui.Keyboard;
+import system.Binding;
+import ui.Pannel;
+import ui.Style;
 
 /**
  * ...
  * @author 
  */
-class Tiles extends Pannel
+class Tiles extends ui.Pannel
 {
 	public static var array:Array<TileType> = [];
 	public var graphic:Shape;
@@ -77,7 +80,7 @@ class Tiles extends Pannel
 	
 	override private function update(_)
 	{
-		if (Binding.keyDown && keyInt > bitmap.width/size/60 * 8)
+		if (system.Binding.keyDown && keyInt > bitmap.width/size/60 * 8)
 		{
 			if (Main.upSelect) select.y += -size;
 			if (Main.downSelect) select.y += size;
@@ -111,8 +114,8 @@ class Tiles extends Pannel
 			maxX = Static.max(iX, maxX);
 			maxY = Static.max(iY, maxY);
 			select.graphics.clear();
-			select.graphics.beginFill(Style.data.borders, 0.5);
-			select.graphics.lineStyle(1, Style.data.borders, 1, true, LineScaleMode.NORMAL, JointStyle.MITER);
+			select.graphics.beginFill(ui.Style.data.borders, 0.5);
+			select.graphics.lineStyle(1, ui.Style.data.borders, 1, true, LineScaleMode.NORMAL, JointStyle.MITER);
 			select.x = minX * size;
 			select.y = minY * size;
 			select.graphics.drawRect(0, 0, (maxX - minX + 1) * size, (maxY - minY + 1) * size);

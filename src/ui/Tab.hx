@@ -1,4 +1,4 @@
-package;
+package ui;
 
 import openfl.display.Shape;
 import openfl.display.Sprite;
@@ -17,7 +17,7 @@ class Tab extends Sprite
 	public function new(title:String,setWidth:Int=320,setHeight:Int=912) 
 	{
 		super();
-		titleText = new Text(36, 8, setWidth - 36 * 2, title, 16, Style.data.panel_text);
+		titleText = new ui.Text(36, 8, setWidth - 36 * 2, title, 16, Style.data.panel_text);
 		addChild(titleText);
 		//graphics
 		graphics.lineStyle(2, Style.data.borders);
