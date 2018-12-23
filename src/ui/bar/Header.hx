@@ -101,38 +101,9 @@ class Header extends Sprite
 				File.saveContent(path,Serializer.run({array:array,size:Main.tiles.size,row:row,name:system.Dir.name}));
 			});
 			case 2:
-			//export
-			var row:Int = Math.floor(Main.tiles.bitmap.width / Main.tiles.size);
-			
-			//xml
-			var xml = Xml.createDocument();
-			var map = Xml.createElement("map");
-			map.set("row", Std.string(row));
-			map.set("size", Std.string(Main.tiles.size));
-			xml.addChild(map);
-			var source = Xml.createElement("image");
-			source.set("source", system.Dir.name);
-			xml.addChild(source);
-			var tileDoc = Xml.createElement("tile");
-			xml.addChild(tileDoc);
-			for (i in 0...Main.tile.tilemap.numTiles) 
-			{
-				var doc = Xml.createElement(Std.string(i));
-				doc.set("id", "-1");
-				tileDoc.addChild(doc);
-			}
-			for (i in 0...Main.tile.tilemap.numTiles)
-			{
-				var tile = Main.tile.tilemap.getTileAt(i);
-				var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * row;
-				var doc = Xml.createElement("tile");
-				doc.set("id", Std.string(tile.id));
-				tileDoc.insertChild(doc, id);
-			}
-			trace(xml.toString());
-			
-			//json
+			//export json
 			var array:Array<Int> = [];
+			var row:Int = Math.floor(Main.tiles.bitmap.width / Main.tiles.size);
 			for (i in 0...Math.floor(Main.tiles.bitmap.height / Main.tiles.size) * row)array.push(-1);
 			for (i in 0...Main.tile.tilemap.numTiles)
 			{
