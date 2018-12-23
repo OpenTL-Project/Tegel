@@ -1,5 +1,6 @@
 package ui.bar;
 
+import export.OpenFLExporter;
 import haxe.Json;
 import haxe.Serializer;
 import haxe.Unserializer;
@@ -42,6 +43,7 @@ class Header extends Sprite
 		add("Load");
 		add("Save");
 		add("Export");
+		add("Import");
 	}
 	private function add(string:String)
 	{
@@ -59,7 +61,7 @@ class Header extends Sprite
 		{
 			case 0:
 			//load
-			dialog.browse(FileDialogType.OPEN, "tegel", System.applicationStorageDirectory, "Open Tegel");
+			dialog.browse(FileDialogType.OPEN, "tegel", System.applicationDirectory, "Open Tegel");
 			dialog.onSelect.add(function(path:String)
 			{
 				var string = File.getContent(path);
@@ -67,15 +69,20 @@ class Header extends Sprite
 				{
 					var data:FileContent = Unserializer.run(string);
 					Main.tiles.updateBitmap(Assets.getBitmapData("assets/tilesets/" + data.name));
+					Main.tile.intX = data.row;
+					Main.tile.intY = Math.floor(data.array.length / Main.tile.intX);
 					Main.tiles.size = data.size;
 					Main.tile.size();
 					Main.infoBar.rowInput.text = "" + Main.tiles.size;
-					var id:Int = 0;
-					for (j in 0...Math.floor(data.array.length/data.row))
+					Main.infoBar.columnInput.text = "" + Main.tile.intX;
+					Main.infoBar.columnInput.text = "" + Main.tile.intY;
+					var int:Int = 0;
+					for (j in 0...Main.tile.intY)
 					{
-						for (i in 0...data.row)
+						for (i in 0...Main.tile.intX)
 						{
-							Main.tile.tilemap.addTile(new Tile(data.array[id++], i * Main.tiles.size, j * Main.tiles.size));
+							var id = data.array[int++];
+							if (id >= 0) Main.tile.tilemap.addTile(new Tile(id, i * Main.tiles.size, j * Main.tiles.size));
 						}
 					}
 					trace("data: " + data);
@@ -86,11 +93,11 @@ class Header extends Sprite
 			});
 			case 1:
 			//save
-			dialog.browse(FileDialogType.SAVE, "tegel", System.applicationStorageDirectory, "Open Tegel");
+			dialog.browse(FileDialogType.SAVE, "tegel", System.applicationDirectory, "Open Tegel");
 			dialog.onSelect.add(function(path:String)
 			{
-				var row:Int = Math.floor(Main.tiles.bitmap.width / Main.tiles.size);
-				var array:Array<Int> = [for (i in 0...Math.floor(Main.tiles.bitmap.height / Main.tiles.size) * row) -1];
+				var row:Int = Main.tile.intX;
+				var array:Array<Int> = [for (i in 0...Main.tile.intY * row) -1];
 				for (i in 0...Main.tile.tilemap.numTiles)
 				{
 					var tile = Main.tile.tilemap.getTileAt(i);
@@ -103,21 +110,31 @@ class Header extends Sprite
 			case 2:
 			//export json
 			var array:Array<Int> = [];
-			var row:Int = Math.floor(Main.tiles.bitmap.width / Main.tiles.size);
-			for (i in 0...Math.floor(Main.tiles.bitmap.height / Main.tiles.size) * row)array.push(-1);
+			for (i in 0...Main.tile.intX * Main.tile.intY) array.push( -1);
 			for (i in 0...Main.tile.tilemap.numTiles)
 			{
 				var tile = Main.tile.tilemap.getTileAt(i);
-				var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * row;
+				var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * Main.tile.intX;
 				array[id] = tile.id;
 			}
-			dialog.browse(FileDialogType.SAVE, "json", System.applicationStorageDirectory, "Export Json");
-			var data:Dynamic = Json.stringify({array:array, size:Main.tiles.size, row:row, name:Dir.name});
+			dialog.browse(FileDialogType.SAVE, "json", System.applicationDirectory, "Export Json");
+			var data:Dynamic = Json.stringify({array:array, size:Main.tiles.size, row:Main.tile.intX, name:Dir.name});
 			dialog.onSelect.add(function(path:String)
 			{
 				File.saveContent(path, data);
 			});
 			trace("data " + data);
+			case 3:
+			//import json
+			dialog.browse(FileDialogType.OPEN, "json", System.applicationDirectory, "Import Json");
+			dialog.onSelect.add(function(path:String)
+			{
+				trace("import");
+				var tilemap = OpenFLExporter.create(path, "assets/tilesets/");
+				tilemap.y = 100;
+				tilemap.x = 100;
+				Lib.current.addChild(tilemap);
+			});
 		}
 	}
 	

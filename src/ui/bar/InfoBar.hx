@@ -21,7 +21,7 @@ class InfoBar extends DisplayObjectContainer
 	var rowText:Text;
 	public var rowInput:Text;
 	var columnText:Text;
-	var columnInput:Text;
+	public var columnInput:Text;
 
 	public function new() 
 	{

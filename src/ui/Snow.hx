@@ -19,7 +19,6 @@ class Snow extends Tile
 		super(0, x, y,0.1,0.1);
 		set();
 		colorTransform = new ColorTransform(100, 100, 100,0.4);
-		trace("x " + x + " y " + y);
 	}
 	private function set()
 	{
