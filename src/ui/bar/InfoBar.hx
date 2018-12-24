@@ -35,7 +35,7 @@ class InfoBar extends DisplayObjectContainer
 		addChild(positionText);
 		//size
 		sizeText = new Text(130, 10, 50, "size:", 20, Style.data.panel_text, TextFormatAlign.LEFT);
-		sizeInput = new Text(170, 10, 100, "1", 20, Style.data.panel_text, TextFormatAlign.LEFT);
+		sizeInput = new Text(170, 10, 100, "16", 20, Style.data.panel_text, TextFormatAlign.LEFT);
 		sizeInput.type = TextFieldType.INPUT;
 		sizeInput.mouseEnabled = true;
 		sizeInput.selectable = true;
@@ -44,7 +44,7 @@ class InfoBar extends DisplayObjectContainer
 		addChild(sizeInput);
 		//row
 		rowText = new Text(220, 10, 100, "row:", 20, Style.data.panel_text, TextFormatAlign.LEFT);
-		rowInput = new Text(260, 10, 100, "10", 20, Style.data.panel_text, TextFormatAlign.LEFT);
+		rowInput = new Text(260, 10, 100, "9", 20, Style.data.panel_text, TextFormatAlign.LEFT);
 		rowInput.type = TextFieldType.INPUT;
 		rowInput.mouseEnabled = true;
 		rowInput.selectable = true;
@@ -53,7 +53,7 @@ class InfoBar extends DisplayObjectContainer
 		addChild(rowInput);
 		//column
 		columnText = new Text(300, 10, 100, "column:", 20, Style.data.panel_text, TextFormatAlign.LEFT);
-		columnInput = new Text(360 + 20, 10, 100, "10", 20, Style.data.panel_text, TextFormatAlign.LEFT);
+		columnInput = new Text(360 + 20, 10, 100, "9", 20, Style.data.panel_text, TextFormatAlign.LEFT);
 		columnInput.type = TextFieldType.INPUT;
 		columnInput.mouseEnabled = true;
 		columnInput.selectable = true;

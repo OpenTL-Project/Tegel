@@ -44,8 +44,8 @@ class TileStage extends ui.Pannel
 {
 	
 	var moveSpeed:Float = 5;
-	public var intX:Int = 10;
-	public var intY:Int = 10;
+	public var intX:Int = 9;
+	public var intY:Int = 9;
 	var mouseBool:Bool = false;
 	var rightBool:Bool = false;
 	public var tilemap:Tilemap;

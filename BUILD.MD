@@ -17,10 +17,7 @@ haxelib install lime
 haxelib install openfl
 haxelib install hxcpp
 haxelib install svg
-haxelib git app "https://github.com/PXshadow/App"
 ```
-
-*Note: The "app" library is the backbone of Tegel's user-interface. While it is possible to use the Haxelib version of "app", we recommend using the GIT version and updating it when new errors show up.*
 
 <br>
 

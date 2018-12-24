@@ -37,7 +37,7 @@ class Tiles extends ui.Pannel
 	public var maxY:Int = 0;
 	public var maxX:Int = 0;
 	public var mouseBool:Bool = false;
-	public var size:Int = 1;
+	public var size:Int = 16;
 	public function new()
 	{
 		super();
