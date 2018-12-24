@@ -27,6 +27,7 @@ class Tiles extends ui.Pannel
 	public var bitmap:Bitmap;
 	public var tab:Shape;
 	public var select:Sprite;
+	public var selectInital:Bool = true;
 	public var selectDrag:Bool = false;
 	public var keyInt:Int = 0;
 	public var selectOffset:Point;
@@ -145,7 +146,11 @@ class Tiles extends ui.Pannel
 				minY = Math.floor(mouseY / size);
 				maxX = 0;
 				maxY = 0;
-				select.graphics.clear();
+				if (selectInital)
+				{
+					Main.tile.size();
+					selectInital = false;
+				}
 			}
 		}
 	}
