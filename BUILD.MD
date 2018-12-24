@@ -1,16 +1,16 @@
-Project is written in haxe and uses OpenFL as the main framework.
+Tegel is written in Haxe and uses OpenFL as the main framework.
 
-The following below are Required for building the project.
+The following below are required for building the project.
 
 ### Haxe ###
 [Download](https://haxe.org/download/) 
 
-*NOTE:* This project uses haxe 3.4.7 to test compleation with Travis, newer syntax supported by 4.0 will not be able to pass review.
+*NOTE:* This project uses **Haxe 3.4.7** to test completion with Travis, newer syntax supported by 4.0 will not be able to pass review.
 
 <br>
 
 ### Haxelib Libaries ###
-after installing haxe, the haxelib command should be available in terminal/command prompt
+After installing Haxe, the `haxelib` command should be available in your terminal/command prompt.
 
 ``` SH
 haxelib install lime
@@ -20,7 +20,7 @@ haxelib install svg
 haxelib git app "https://github.com/PXshadow/App"
 ```
 
-*Note: It is possible to use the haxelib version of app, however app is the ui layer underneath OpenTL and is constantly adapting in order to fit new imerging needs of this project so it is advised to just use the git version and update if new builds return erros.*
+*Note: The "app" library is the backbone of Tegel's user-interface. While it is possible to use the Haxelib version of "app", we recommend using the GIT version and updating it when new errors show up.*
 
 <br>
 
@@ -39,7 +39,7 @@ lime setup cpp
 
 <br>
 
-### **Building project!** ###
+### **Building the project!** ###
 
 * c++ version
 ``` SH
@@ -51,10 +51,10 @@ lime test neko
 ```
 
 ### flags ###
-explanation: flags are used to set certain atributes for your build, add them to the end of a build/test command.
+*Explanation*: Flags are used to apply certain attributes to your build. You can use them by appending them to a build/test command.
 
-* -debug for testing/debugging builds
-* -release greater performance.
-* -final release with [dce full](https://haxe.org/manual/cr-dce.html)
+* `-debug`:for testing/debugging builds
+* `-release`: greater performance.
+* `-final`: release with [dce full](https://haxe.org/manual/cr-dce.html)
 
 
