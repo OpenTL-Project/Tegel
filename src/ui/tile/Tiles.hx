@@ -29,7 +29,6 @@ class Tiles extends ui.Pannel
 	public var select:Sprite;
 	public var selectInital:Bool = true;
 	public var selectDrag:Bool = false;
-	public var keyInt:Int = 0;
 	public var selectOffset:Point;
 	public var selectX:Float = 0;
 	public var selectY:Float = 0;
@@ -81,20 +80,6 @@ class Tiles extends ui.Pannel
 	
 	override private function update(_)
 	{
-		if (system.Binding.keyDown && keyInt >  (bitmap.width/size) * 4)
-		{
-			if (Main.upSelect) select.y += -size;
-			if (Main.downSelect) select.y += size;
-			if (Main.leftSelect) select.x += -size;
-			if (Main.rightSelect) select.x += size;
-			
-			if (select.y + select.height > bitmap.height + size) select.y += -size;
-			if (select.y < 0) select.y += size;
-			if (select.x + select.width > bitmap.width + size) select.x += -size;
-			if (select.x < 0) select.x += size;
-			keyInt = 0;
-		}
-		keyInt++;
 		if (selectDrag)
 		{
 			select.x = Math.floor((mouseX - selectOffset.x) / size) * size;

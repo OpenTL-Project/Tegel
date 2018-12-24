@@ -3,6 +3,7 @@ package;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+import openfl.display.Shape;
 import openfl.display.Sprite;
 import openfl.Lib;
 import openfl.display.Tile;
@@ -76,6 +77,18 @@ class Main extends Sprite
 	private function keyDown(e:KeyboardEvent)
 	{
 		system.Binding.key(e.keyCode, true);
+		//set select move
+		var select:Sprite = Main.tiles.select;
+		var size:Int = Main.tiles.size;
+		if (Main.upSelect) select.y += -size;
+		if (Main.downSelect) select.y += size;
+		if (Main.leftSelect) select.x += -size;
+		if (Main.rightSelect) select.x += size;
+			
+		if (select.y + select.height > Main.tiles.bitmap.height + size) select.y += -size;
+		if (select.y < 0) select.y += size;
+		if (select.x + select.width > Main.tiles.bitmap.width + size) select.x += -size;
+		if (select.x < 0) select.x += size;
 	}
 	private function keyUp(e:KeyboardEvent)
 	{

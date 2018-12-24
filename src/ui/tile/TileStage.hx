@@ -64,7 +64,8 @@ class TileStage extends ui.Pannel
 	{
 		super();
 		buttonMode = true;
-		tilemap = new Tilemap(0,0);
+		tilemap = new Tilemap(0, 0);
+		tilemap.smoothing = true;
 		addChild(tilemap);
 		shape = new Shape();
 		shape.cacheAsBitmap = true;

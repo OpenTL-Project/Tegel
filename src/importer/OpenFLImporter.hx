@@ -1,4 +1,4 @@
-package export;
+package importer;
 import haxe.Json;
 import lime.system.System;
 import openfl.display.BitmapData;
@@ -12,7 +12,7 @@ import sys.io.File;
  * ...
  * @author 
  */
-class OpenFLExporter
+class OpenFLImporter
 {
 
 	public static function create(path:String,pathImage:String):Tilemap

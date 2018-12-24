@@ -1,11 +1,12 @@
 package ui.bar;
 
-import export.OpenFLExporter;
+import importer.OpenFLImporter;
 import haxe.Json;
 import haxe.Serializer;
 import haxe.Timer;
 import haxe.Unserializer;
 import haxe.crypto.Base64;
+import importer.OpenFLImporter;
 import lime.system.System;
 import lime.ui.FileDialog;
 import lime.ui.FileDialogType;
@@ -129,7 +130,7 @@ class Header extends Sprite
 			dialog.onSelect.add(function(path:String)
 			{
 				trace("import");
-				var tilemap = OpenFLExporter.create(path, "assets/tilesets/");
+				var tilemap = importer.OpenFLImporter.create(path, "assets/tilesets/");
 				tilemap.x = 100;
 				tilemap.y = 100;
 				tilemap.cacheAsBitmap = true;

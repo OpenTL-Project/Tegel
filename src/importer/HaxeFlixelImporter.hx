@@ -1,4 +1,4 @@
-package source;
+package importer;
 import haxe.Json;
 import sys.io.File;
 import flixel.tile.FlxTilemap;
@@ -7,7 +7,7 @@ import flixel.tile.FlxTilemap;
  * ...
  * @author 
  */
-class HaxeFlixelExporter 
+class HaxeFlixelImporter 
 {
 	public static function create(path:String,pathImage:String):FlxTilemap
 	{
