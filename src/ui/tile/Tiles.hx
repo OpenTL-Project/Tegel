@@ -80,7 +80,7 @@ class Tiles extends ui.Pannel
 	
 	override private function update(_)
 	{
-		if (system.Binding.keyDown && keyInt > bitmap.width/size/60 * 8)
+		if (system.Binding.keyDown && keyInt >  (bitmap.width/size) * 4)
 		{
 			if (Main.upSelect) select.y += -size;
 			if (Main.downSelect) select.y += size;
@@ -113,6 +113,14 @@ class Tiles extends ui.Pannel
 			minY = Static.min(iY, minY);
 			maxX = Static.max(iX, maxX);
 			maxY = Static.max(iY, maxY);
+			var selectX:Int = Math.floor(select.x / Main.tiles.size);
+			var selectY:Int = Math.floor(select.y / Main.tiles.size);
+			//manual set
+			if (maxX > iX && selectX < iX) maxX = iX;
+			if (maxY > iY && selectY < iY) maxY = iY;
+			//if (minX < iX && selectX > iX) minX = iX;
+			//if (minY < iY && selectY > iY) minY = iY;
+			
 			select.graphics.clear();
 			select.graphics.beginFill(ui.Style.data.borders, 0.5);
 			select.graphics.lineStyle(1, ui.Style.data.borders, 1, true, LineScaleMode.NORMAL, JointStyle.MITER);

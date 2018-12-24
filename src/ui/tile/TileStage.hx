@@ -212,8 +212,8 @@ class TileStage extends ui.Pannel
 		shape.graphics.clear();
 		drawGrid();
 		drawBorder();
-		tilemap.width = intX * Main.tiles.size;
-		tilemap.height = intY * Main.tiles.size;
+		tilemap.width = intX * Main.tiles.size - 1;
+		tilemap.height = intY * Main.tiles.size - 1;
 		if (delete)
 		{
 			//delete tiles outside of tilemap

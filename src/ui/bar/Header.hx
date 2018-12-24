@@ -3,6 +3,7 @@ package ui.bar;
 import export.OpenFLExporter;
 import haxe.Json;
 import haxe.Serializer;
+import haxe.Timer;
 import haxe.Unserializer;
 import haxe.crypto.Base64;
 import lime.system.System;
@@ -69,8 +70,8 @@ class Header extends Sprite
 				{
 					var data:FileContent = Unserializer.run(string);
 					Main.tiles.updateBitmap(Assets.getBitmapData("assets/tilesets/" + data.name));
-					Main.tile.intX = data.row;
-					Main.tile.intY = Math.floor(data.array.length / Main.tile.intX);
+					Main.tile.intX = data.mapX;
+					Main.tile.intY = data.mapY;
 					Main.tiles.size = data.size;
 					Main.tile.size();
 					Main.infoBar.rowInput.text = "" + Main.tiles.size;
@@ -96,16 +97,14 @@ class Header extends Sprite
 			dialog.browse(FileDialogType.SAVE, "tegel", System.applicationDirectory, "Open Tegel");
 			dialog.onSelect.add(function(path:String)
 			{
-				var row:Int = Main.tile.intX;
-				var array:Array<Int> = [for (i in 0...Main.tile.intY * row) -1];
+				var array:Array<Int> = [for (i in 0...Main.tile.intY * Main.tile.intX) -1];
 				for (i in 0...Main.tile.tilemap.numTiles)
 				{
 					var tile = Main.tile.tilemap.getTileAt(i);
-					var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * row;
-					trace("id " + id);
+					var id:Int = Math.floor(tile.x / Main.tiles.size) + Math.floor(tile.y / Main.tiles.size) * Main.tile.intX;
 					array[id] = tile.id;
 				}
-				File.saveContent(path,Serializer.run({array:array,size:Main.tiles.size,row:row,name:system.Dir.name}));
+				File.saveContent(path,Serializer.run({array:array,size:Main.tiles.size,mapX:Main.tile.intX,mapY:Main.tile.intY,name:system.Dir.name}));
 			});
 			case 2:
 			//export json
@@ -118,7 +117,7 @@ class Header extends Sprite
 				array[id] = tile.id;
 			}
 			dialog.browse(FileDialogType.SAVE, "json", System.applicationDirectory, "Export Json");
-			var data:Dynamic = Json.stringify({array:array, size:Main.tiles.size, row:Main.tile.intX, name:Dir.name});
+			var data:Dynamic = Json.stringify({array:array, size:Main.tiles.size, mapX:Main.tile.intX,mapY:Main.tile.intY, name:Dir.name});
 			dialog.onSelect.add(function(path:String)
 			{
 				File.saveContent(path, data);
@@ -131,8 +130,17 @@ class Header extends Sprite
 			{
 				trace("import");
 				var tilemap = OpenFLExporter.create(path, "assets/tilesets/");
-				tilemap.y = 100;
 				tilemap.x = 100;
+				tilemap.y = 100;
+				tilemap.cacheAsBitmap = true;
+				var timer = new Timer(5 * 1000);
+				timer.run = function()
+				{
+					Lib.current.removeChild(tilemap);
+					tilemap = null;
+					timer.stop();
+					timer = null;
+				}
 				Lib.current.addChild(tilemap);
 			});
 		}
@@ -149,4 +157,4 @@ class Header extends Sprite
 	
 }
 
-typedef FileContent = {array:Array<Int>,row:Int,size:Int,name:String}
+typedef FileContent = {array:Array<Int>,mapX:Int,mapY:Int,size:Int,name:String}
