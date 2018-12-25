@@ -67,7 +67,7 @@ class Pannel extends Sprite
 		if (scaleX > 8) scaleX = 8;
 		if (scaleY > 8) scaleY = 8;
 		if (scaleX < 0.1) scaleX = 0.1;
-		if (scaleX < 0.1) scaleX = 0.1;
+		if (scaleY < 0.1) scaleY = 0.1;
 	}
 	
 	public function leave()
