@@ -55,19 +55,7 @@ class Pannel extends Sprite
 	private function mouseWheel(e:MouseEvent)
 	{
 		var scale = 0.1;
-		if (e.delta > 0)
-		{
-			scaleX += scale;
-			scaleY += scale;
-		}else{
-			scaleX += -scale;
-			scaleY += -scale;
-		}
-		//scale
-		if (scaleX > 8) scaleX = 8;
-		if (scaleY > 8) scaleY = 8;
-		if (scaleX < 0.1) scaleX = 0.1;
-		if (scaleY < 0.1) scaleY = 0.1;
+		applyScale( e.delta > 0 ? scale : -scale );
 	}
 	
 	public function leave()
@@ -78,6 +66,16 @@ class Pannel extends Sprite
 			x = (stage.stageWidth - width) / 2;
 			y = (stage.stageHeight - height) / 2;
 		}
+	}
+
+	/**
+	* Applies a scale to this panel while maintaining a cap on scale.
+	* @param scale An incremental delta to apply to the current scale.
+	**/
+	private function applyScale( scale:Float )
+	{
+		scaleX = Math.max( 0.1, Math.min( 8, scaleX + scale ) );
+		scaleY = Math.max( 0.1, Math.min( 8, scaleY + scale ) );
 	}
 	
 }
